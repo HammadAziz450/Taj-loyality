@@ -18,7 +18,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
-// Firebase Config
+// 🔥 Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
   authDomain: "taj-loyality.firebaseapp.com",
@@ -29,7 +29,7 @@ const firebaseConfig = {
 };
 
 
-// INIT (ONLY ONCE)
+// 🔥 INIT (ONLY ONCE)
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -51,7 +51,7 @@ window.login = function () {
 //
 getRedirectResult(auth)
   .then((result) => {
-    if (result && result.user) {
+    if (result?.user) {
       console.log("Login success:", result.user);
     }
   })
@@ -69,6 +69,7 @@ onAuthStateChanged(auth, async (user) => {
 
     localStorage.setItem("userName", user.displayName);
 
+    // redirect control
     if (
       window.location.pathname.includes("index.html") ||
       window.location.pathname === "/"
@@ -77,6 +78,7 @@ onAuthStateChanged(auth, async (user) => {
       return;
     }
 
+    // UI update
     const userNameEl = document.getElementById("userName");
     if (userNameEl) {
       userNameEl.innerText = "Hi, " + user.displayName + " 👋";
@@ -95,21 +97,17 @@ onAuthStateChanged(auth, async (user) => {
 // ✅ LOAD USER
 //
 async function loadUser() {
-  try {
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
+  const ref = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(ref);
 
-    if (!snap.exists()) {
-      await setDoc(ref, {
-        stamps: 0,
-        lastStamp: 0
-      });
-    }
-
-    updateUI();
-  } catch (err) {
-    console.error("Load error:", err.message);
+  if (!snap.exists()) {
+    await setDoc(ref, {
+      stamps: 0,
+      lastStamp: 0
+    });
   }
+
+  updateUI();
 }
 
 
@@ -117,41 +115,37 @@ async function loadUser() {
 // ✅ UPDATE UI
 //
 async function updateUI() {
-  try {
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
-    const data = snap.data();
+  const ref = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(ref);
+  const data = snap.data();
 
-    const stamps = data.stamps || 0;
+  const stamps = data.stamps || 0;
 
-    let bar = "";
-    for (let i = 0; i < 6; i++) {
-      bar += `<span style="
-        display:inline-block;
-        width:20px;
-        height:20px;
-        border-radius:50%;
-        margin:5px;
-        background:${i < stamps ? "green" : "#ccc"}
-      "></span>`;
-    }
+  let bar = "";
+  for (let i = 0; i < 6; i++) {
+    bar += `<span style="
+      display:inline-block;
+      width:20px;
+      height:20px;
+      border-radius:50%;
+      margin:5px;
+      background:${i < stamps ? "green" : "#ccc"}
+    "></span>`;
+  }
 
-    const progressEl = document.getElementById("progress");
-    const countEl = document.getElementById("count");
+  const progressEl = document.getElementById("progress");
+  const countEl = document.getElementById("count");
 
-    if (progressEl) progressEl.innerHTML = bar;
-    if (countEl) countEl.innerText = `${stamps}/6 Stamps`;
+  if (progressEl) progressEl.innerHTML = bar;
+  if (countEl) countEl.innerText = `${stamps}/6 Stamps`;
 
-    if (stamps >= 6) {
-      const code = generateCode();
+  if (stamps >= 6) {
+    const code = generateCode();
 
-      const rewardEl = document.getElementById("reward");
-      if (rewardEl) rewardEl.innerText = "Reward Code: " + code;
+    const rewardEl = document.getElementById("reward");
+    if (rewardEl) rewardEl.innerText = "Reward Code: " + code;
 
-      await updateDoc(ref, { stamps: 0 });
-    }
-  } catch (err) {
-    console.error("UI error:", err.message);
+    await updateDoc(ref, { stamps: 0 });
   }
 }
 
@@ -160,27 +154,23 @@ async function updateUI() {
 // ✅ ADD STAMP
 //
 window.addStamp = async function () {
-  try {
-    const ref = doc(db, "users", currentUser.uid);
-    const snap = await getDoc(ref);
-    const data = snap.data();
+  const ref = doc(db, "users", currentUser.uid);
+  const snap = await getDoc(ref);
+  const data = snap.data();
 
-    const now = Date.now();
+  const now = Date.now();
 
-    if (now - data.lastStamp < 86400000) {
-      alert("Already claimed today!");
-      return;
-    }
-
-    await updateDoc(ref, {
-      stamps: (data.stamps || 0) + 1,
-      lastStamp: now
-    });
-
-    updateUI();
-  } catch (err) {
-    console.error("Stamp error:", err.message);
+  if (now - data.lastStamp < 86400000) {
+    alert("Already claimed today!");
+    return;
   }
+
+  await updateDoc(ref, {
+    stamps: (data.stamps || 0) + 1,
+    lastStamp: now
+  });
+
+  updateUI();
 };
 
 
@@ -193,7 +183,7 @@ window.logout = async function () {
 
 
 //
-// ✅ CODE GENERATOR
+// ✅ GENERATE CODE
 //
 function generateCode() {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
