@@ -2,8 +2,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 
 import {
   getAuth,
-  signInWithPopup,
   GoogleAuthProvider,
+  signInWithRedirect,
+  getRedirectResult,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -16,6 +17,7 @@ import {
   updateDoc
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+
 // Firebase Config
 const firebaseConfig = {
   apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
@@ -26,40 +28,55 @@ const firebaseConfig = {
   appId: "1:23994370093:web:d11393abd2768513e490a4"
 };
 
+
+// INIT (ONLY ONCE)
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+const provider = new GoogleAuthProvider();
 
 let currentUser = null;
 
-// LOGIN
-window.login = async function () {
-  try {
-    const provider = new GoogleAuthProvider();
-    await signInWithPopup(auth, provider);
-  } catch (err) {
-    alert(err.message);
-  }
+
+//
+// ✅ LOGIN (REDIRECT ONLY)
+//
+window.login = function () {
+  signInWithRedirect(auth, provider);
 };
 
-// AUTH STATE
+
+//
+// ✅ HANDLE REDIRECT RESULT
+//
+getRedirectResult(auth)
+  .then((result) => {
+    if (result && result.user) {
+      console.log("Login success:", result.user);
+    }
+  })
+  .catch((err) => {
+    console.error("Redirect error:", err.message);
+  });
+
+
+//
+// ✅ AUTH STATE
+//
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     currentUser = user;
 
-    // Save user name
     localStorage.setItem("userName", user.displayName);
 
-    // Redirect only from index page
     if (
       window.location.pathname.includes("index.html") ||
       window.location.pathname === "/"
     ) {
-      window.location.href = "dhashboard.html";
+      window.location.href = "dashboard.html";
       return;
     }
 
-    // Dashboard page UI
     const userNameEl = document.getElementById("userName");
     if (userNameEl) {
       userNameEl.innerText = "Hi, " + user.displayName + " 👋";
@@ -73,7 +90,10 @@ onAuthStateChanged(auth, async (user) => {
   }
 });
 
-// LOAD USER
+
+//
+// ✅ LOAD USER
+//
 async function loadUser() {
   try {
     const ref = doc(db, "users", currentUser.uid);
@@ -92,7 +112,10 @@ async function loadUser() {
   }
 }
 
-// UPDATE UI
+
+//
+// ✅ UPDATE UI
+//
 async function updateUI() {
   try {
     const ref = doc(db, "users", currentUser.uid);
@@ -121,8 +144,8 @@ async function updateUI() {
 
     if (stamps >= 6) {
       const code = generateCode();
-      const rewardEl = document.getElementById("reward");
 
+      const rewardEl = document.getElementById("reward");
       if (rewardEl) rewardEl.innerText = "Reward Code: " + code;
 
       await updateDoc(ref, { stamps: 0 });
@@ -132,7 +155,10 @@ async function updateUI() {
   }
 }
 
-// ADD STAMP
+
+//
+// ✅ ADD STAMP
+//
 window.addStamp = async function () {
   try {
     const ref = doc(db, "users", currentUser.uid);
@@ -157,17 +183,25 @@ window.addStamp = async function () {
   }
 };
 
-// LOGOUT
+
+//
+// ✅ LOGOUT
+//
 window.logout = async function () {
   await signOut(auth);
 };
 
-// GENERATE REWARD CODE
+
+//
+// ✅ CODE GENERATOR
+//
 function generateCode() {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   let code = "";
+
   for (let i = 0; i < 5; i++) {
     code += chars[Math.floor(Math.random() * chars.length)];
   }
+
   return code;
 }
