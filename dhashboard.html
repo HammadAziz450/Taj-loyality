@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="dashboared.css">
+
+</head>
+
+<body>
+    <div class="phone">
+        <header>
+            <div class="logo">
+                <img src="assets/logo.png" alt="Loading">
+            </div>
+        </header>
+        <div class="top">
+            <h1 id="userName">Hi, 👋</h1>
+            <!-- <div>🔔</div> -->
+        </div>
+        <div id="cardsContainer"></div>
+        <!-- <div class="card">
+            <h2>Your Reward Progress</h2>
+            <h3>Branch Name</h3>
+
+            <div class="progress" id="branchBars">
+                <div class="ProgressBar">
+                    <div class="colourArea" style="width: 40%;"></div>
+                </div>
+                
+            </div>
+            
+            <div style="display: flex;justify-content: space-between;margin-top: 15px;"><span>0%</span><span>100%</span></div>
+
+        </div> -->
+
+
+
+
+        <div class="actions">
+            <a href="./scan.html">
+                <div class="box">
+                    📷
+                    <h4>Scan QR</h4>
+                </div>
+            </a>
+            <a href="histroy.html">
+                <div class="box">
+                    🕘
+                    <h4>History</h4>
+                </div>
+            </a>
+        </div>
+        <div class="keep">
+            <h3>Keep going!</h3>
+            <p>Get 6 stamps and win rewards.</p>
+        </div>
+        <div class="activity" id="histroy">
+            <h3>Recent Activity</h3>
+            <!-- <div class="item"><span>Branch 133</span><span>+1 Stamp</span></div>
+            <div class="item"><span>Branch 108</span><span>+1 Stamp</span></div>
+            <div class="item"><span>Branch 123</span><span>+1 Stamp</span></div> -->
+        </div>
+        <div class="nav">
+
+            <a href="dhashboard.html">
+                <div class="active">🏠<br>Home</div>
+            </a>
+            <a href="histroy.html">
+                <div>🕘<br>History</div>
+            </a>
+            <a href="./reward.html">
+                <div>🎁<br>Reward</div>
+            </a>
+            <a href="profile.html">
+                <div>👤<br>Profile</div>
+            </a>
+        </div>
+    </div>
+</body>
+<script type="module" src="dashboared.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+    import {
+        getAuth,
+        onAuthStateChanged,
+        signOut,
+        setPersistence,
+        browserLocalPersistence
+    } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+    // 🔥 YOUR FIREBASE CONFIG (replace this)
+    const firebaseConfig = {
+        apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
+        authDomain: "taj-loyality.firebaseapp.com",
+        projectId: "taj-loyality",
+        storageBucket: "taj-loyality.appspot.com",
+        messagingSenderId: "23994370093",
+        appId: "1:23994370093:web:d11393abd2768513e490a4"
+    };
+
+    // INIT FIREBASE
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 🔐 KEEP USER LOGGED IN
+    setPersistence(auth, browserLocalPersistence);
+
+    // ⏳ WAIT FOR AUTH STATE (IMPORTANT FIX)
+    onAuthStateChanged(auth, (user) => {
+
+        if (user) {
+            document.getElementById("userName").innerText =
+                `Hi, ${user.displayName} 👋` || "No Name";
+        }
+
+        else {
+            // ONLY REDIRECT IF REALLY NOT LOGGED IN
+            setTimeout(() => {
+                if (!auth.currentUser) {
+                    console.log("u r not login");
+
+                }
+            }, 800);
+        }
+    });
+
+
+</script>
+
+</html>

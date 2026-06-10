@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Reward - Platinum</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="admin.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f3f3f3;
+        }
+
+        .header {
+            padding: 20px;
+            background: #111827;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-grid {
+            display: grid;
+            gap: 15px;
+            padding: 20px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 16px;
+            padding: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            transition: 0.2s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .user-header {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .avatar {
+            width: 45px;
+            height: 45px;
+            background: #111827;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin: 6px 0;
+            font-size: 13px;
+        }
+
+        .plan {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .plan.platinum {
+            background: #e0f2fe;
+            color: #075985;
+        }
+
+        .meter {
+            color: #0369a1;
+            font-weight: bold;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <h2>Hi, <span id="branchName">Branch</span></h2>
+            <p>Welcome Back</p>
+        </div>
+
+        <a href="allUser.html">
+            <div class="menu-item">All User</div>
+        </a>
+
+        <div class="menu-item dropdown-btn">
+
+            <span>Inprogress User</span>
+
+            <span class="arrow">▲</span>
+
+        </div>
+        <div class="dropdown-content">
+
+            <a href="insilver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="inGold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="inplatinum.html">
+
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <div class="menu-item dropdown-btn">
+            <span>Complete User</span>
+            <span class="arrow">▲</span>
+        </div>
+
+
+
+        <div class="dropdown-content">
+
+            <a href="complete_silver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="complete_gold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="complete_platinum.html">
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <a href="editReward.html">
+            <div class="menu-item">
+                Edit Reward
+            </div>
+        </a>
+
+        <a href="staffReward.html">
+            <div class="menu-item">
+                S.M \ S.S Reward
+            </div>
+        </a>
+        <a href="setEvevenDate.html">
+            <div class="menu-item">
+                Set Event Date
+            </div>
+        </a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="logo">
+            <img src="assets/logo.png" alt="">
+        </div>
+
+        <div id="usersContainer"></div>
+ <div class="bottom-btn">
+            <button id="generateBtn">Generate & Download Report</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+    <!-- FIREBASE -->
+    <script type="module">
+
+        import { initializeApp }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+
+        import {
+            getFirestore,
+            collection,
+            getDocs,
+               query,
+            where,
+            deleteDoc,
+            doc
+        }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVgzkGtL0F9HogTXrsFuUg0QGS-XZUT8",
+            authDomain: "taj-loyality.firebaseapp.com",
+            projectId: "taj-loyality",
+            storageBucket: "taj-loyality.appspot.com",
+            messagingSenderId: "23994370093",
+            appId: "1:23994370093:web:d11393abd2768513e490a4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const container = document.getElementById("usersContainer");
+
+        const selectedBranch = localStorage.getItem("adminBranch") || "";
+        document.getElementById("branchName").innerText = selectedBranch;
+
+        function normalize(value) {
+            if (!value) return "";
+            return value.toString().replace(/[^0-9]/g, "").trim();
+        }
+
+        async function loadUsers() {
+
+            container.innerHTML = `<div class="loading">Loading...</div>`;
+
+            const snapshot = await getDocs(collection(db, "complete_reward"));
+
+            const localBranch = normalize(selectedBranch);
+
+            const userMap = {};
+
+            snapshot.forEach(doc => {
+
+                const data = doc.data();
+
+                const firestoreBranch = normalize(data.branch);
+
+                // 🔥 ONLY PLATINUM
+                if (
+                    firestoreBranch !== localBranch ||
+                    (data.plan || "").toLowerCase() !== "platinum"
+                ) return;
+
+                const userId = data.userId;
+
+                if (!userMap[userId]) {
+                    userMap[userId] = {
+                        userId,
+                        userName: data.userName,
+                        userEmail: data.userEmail,
+                        meter: 0,
+                        plan: "platinum",
+                        time: data.time
+                    };
+                }
+
+                userMap[userId].meter += Number(data.meter || 0);
+            });
+
+            render(Object.values(userMap));
+        }
+
+        function render(users) {
+
+            if (!users.length) {
+                container.innerHTML = `<div class="empty">No Platinum Reward Users Found</div>`;
+                return;
+            }
+
+            let html = `<div class="card-grid">`;
+
+            users.forEach(u => {
+
+                html += `
+                <div class="user-card">
+
+                    <div class="user-header">
+                        <div class="avatar">
+                            ${(u.userName || "P").charAt(0).toUpperCase()}
+                        </div>
+
+                        <div>
+                            <h2>${u.userName || "-"}</h2>
+                            <p>${u.userEmail || "-"}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <span>Total Meter</span>
+                        <span class="meter">${u.meter.toFixed(2)} L</span>
+                    </div>
+
+                    <div class="row">
+                        <span>Plan</span>
+                        <span class="plan platinum">Platinum</span>
+                    </div>
+
+                    <div class="row">
+                        <span>Date</span>
+                        <small>${u.time ? new Date(u.time).toLocaleString() : "-"}</small>
+                    </div>
+
+                </div>
+                `;
+            });
+
+            html += `</div>`;
+
+            container.innerHTML = html;
+        }
+
+        loadUsers();
+
+        // dropdown
+        const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const dropdown = btn.nextElementSibling;
+                const arrow = btn.querySelector(".arrow");
+
+                if (!dropdown) return;
+
+                const open = dropdown.style.display === "block";
+
+                dropdown.style.display = open ? "none" : "block";
+                arrow.classList.toggle("rotate", !open);
+            });
+        });
+
+
+
+        document.getElementById("generateBtn").addEventListener("click", async () => {
+
+  const branchId = localStorage.getItem("selectedBranch");
+
+  if (!branchId) {
+    alert("Branch not found");
+    return;
+  }
+
+  // ✅ FILTERED QUERY
+  const q = query(
+    collection(db, "complete_reward"),
+    where("plan", "==", "platanium"),
+where("branch", "==", branchId.toString())
+  );
+
+  const snapshot = await getDocs(q);
+
+  if (snapshot.empty) {
+    alert("No platinum data found");
+    return;
+  }
+
+  let rows = [];
+
+  snapshot.forEach(docSnap => {
+    const d = docSnap.data();
+
+    // 🔍 DEBUG (VERY IMPORTANT)
+    // console.log("DATA:", d);
+
+    rows.push({
+      Name: d.userName || "",
+      Email: d.userEmail || "",
+      Plan: d.plan || "",
+      Branch: d.branch || ""
+    });
+  });
+
+  // ✅ CREATE EXCEL
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Platinum Report");
+
+  XLSX.writeFile(wb, "platinum_report.xlsx");
+
+  // ✅ DELETE ONLY FILTERED DATA
+  const deletePromises = snapshot.docs.map(docSnap =>
+    deleteDoc(doc(db, "complete_reward", docSnap.id))
+  );
+
+  await Promise.all(deletePromises);
+
+  alert("Platinum data exported & deleted correctly");
+
+});
+    </script>
+
+</body>
+
+</html>

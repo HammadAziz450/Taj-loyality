@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #f3f3f3;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container {
+            display: flex;
+            gap: 25px;
+            padding: 20px;
+        }
+
+        /* ===== GAUGE ===== */
+        .card {
+            background: white;
+            width: 30%;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .title {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        /* SPEEDOMETER BASE */
+        .speedometer {
+            width: 180px;
+            height: 90px;
+            margin: auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .arc {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            position: absolute;
+            top: 0;
+            left: 0;
+            clip-path: inset(0 0 50% 0);
+        }
+
+        /* NEEDLE */
+        .needle {
+            width: 3px;
+            height: 70px;
+            background: red;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform-origin: bottom;
+            transform: rotate(-90deg);
+            transition: 0.8s ease;
+            border-radius: 5px;
+        }
+
+        .center-dot {
+            width: 12px;
+            height: 12px;
+            background: #111827;
+            border-radius: 50%;
+            position: absolute;
+            bottom: -6px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .center {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .status {
+            font-size: 13px;
+            color: gray;
+        }
+
+        /* BUTTON */
+        #rewardBox {
+            text-align: center;
+            display: none;
+            margin-top: 20px;
+        }
+
+        #buyBtn {
+            padding: 12px 25px;
+            background: #16a34a;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        #buyBtn:disabled {
+            background: gray;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .card img {
+            width: 276px;
+            border-radius: 9px;
+        }
+
+        .inner-card {
+            padding: 14px;
+            text-align: left;
+        }
+
+        .daraz-btn {
+            padding: 12px;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+            color: white;
+            background: #F85606;
+        }
+
+        .insta-btn {
+            background: #e70bc2;
+            padding: 12px;
+            cursor: pointer;
+            border: 0;
+            border-radius: 5px;
+            margin-top: 15px;
+            color: white;
+        }
+    </style>
+    <title>Rewards</title>
+</head>
+
+<body>
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <h2>Hi, <span id="branchName">Branch</span></h2>
+            <p>Welcome Back</p>
+        </div>
+
+        <a href="allUser.html">
+            <div class="menu-item">All User</div>
+        </a>
+
+        <div class="menu-item dropdown-btn">
+
+            <span>Inprogress User</span>
+
+            <span class="arrow">▲</span>
+
+        </div>
+        <div class="dropdown-content">
+
+            <a href="insilver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="inGold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="inplatinum.html">
+
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <div class="menu-item dropdown-btn">
+            <span>Complete User</span>
+            <span class="arrow">▲</span>
+        </div>
+
+
+
+        <div class="dropdown-content">
+
+            <a href="complete_silver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="complete_gold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="complete_platinum.html">
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <a href="editReward.html">
+            <div class="menu-item">
+                Edit Reward
+            </div>
+        </a>
+
+        <a href="staffReward.html">
+            <div class="menu-item">
+                S.M \ S.S Reward
+            </div>
+        </a>
+        <a href="setEvevenDate.html">
+            <div class="menu-item">
+                Set Event Date
+            </div>
+        </a>
+    </div>
+    <div class="main">
+        <div class="container">
+
+            <div class="card">
+                <img src="assets/star.jpg" alt="Star Cleaner">
+                <div class="inner-card">
+                    <h1>Star Cleaner</h1>
+                    <p>This company gives you dishwasher machine asserioes. and some cleaning product is comming soon
+                    </p>
+                    <a href="https://www.daraz.pk/shop/og3pkzam" target="_blank" style="cursor: pointer;">
+
+                        <button class="daraz-btn">Shop On Daraz</button>
+                    </a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="assets/genz.png" alt="Star Cleaner">
+                <div class="inner-card">
+                    <h1>Genz wear</h1>
+                    <p>This brand's give you shirts or printed shirt as you are design
+                        <button class="daraz-btn">Shop On Daraz</button>
+                        <a href="https://www.instagram.com/genzwear4u?igsh=c3J0aWgwenJpdDJw">
+
+                            <button class="insta-btn">Vist On Insta</button>
+                        </a>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        document.getElementById("branchName").innerText =
+            localStorage.getItem("adminBranch") || "";
+
+        const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+
+        dropdownBtns.forEach(btn => {
+            btn.addEventListener("click", () => {
+                const dropdown = btn.nextElementSibling;
+                const arrow = btn.querySelector(".arrow");
+
+                if (!dropdown) return;
+
+                const open = dropdown.style.display === "block";
+
+                dropdown.style.display = open ? "none" : "block";
+                arrow.classList.toggle("rotate", !open);
+            });
+        });
+    </script>
+</body>
+
+</html>

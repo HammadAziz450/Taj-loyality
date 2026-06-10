@@ -1,0 +1,97 @@
+eocr_cU92YdzYZ5Hfmmhkvur-_e_K2JkD6YNM for EasyOCR
+Token prefix
+eocr_cU9
+
+K83475989288957 ocr space
+
+WxvP71wrr682zi09kFlBvsT5Jhc6rc0i 
+
+
+curl "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent" \
+  -H 'Content-Type: application/json' \
+  -H 'X-goog-api-key: AIzaSyAmakFBvwb9UamLGMRwCN8AQiWZ8UqLMew' \
+  -X POST \
+  -d '{
+    "contents": [
+      {
+        "parts": [
+          {
+            "text": "Explain how AI works in a few words"
+          }
+        ]
+      }
+    ]
+  }'
+
+
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
+  authDomain: "taj-loyality.firebaseapp.com",
+  databaseURL: "https://taj-loyality-default-rtdb.firebaseio.com",
+  projectId: "taj-loyality",
+  storageBucket: "taj-loyality.firebasestorage.app",
+  messagingSenderId: "23994370093",
+  appId: "1:23994370093:web:d11393abd2768513e490a4",
+  measurementId: "G-Z1GE3JG6PR"
+};
+
+
+
+
+
+
+
+
+// async function readMeter() {
+//     const file = document.getElementById("meterPhoto").files[0];
+//     if (!file) return alert("Upload image first");
+
+//     const statusEl = document.getElementById("detected");
+//     statusEl.innerText = "Processing...";
+
+//     try {
+//         const imageData = await toBase64(file);
+
+//         const apiKey = "AIzaSyAmakFBvwb9UamLGMRwCN8AQiWZ8UqLMew";
+
+//         // const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+//         const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.5-pro:generateContent?key=${apiKey}`;
+
+//         const response = await fetch(url, {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({
+//                 contents: [{
+//                     parts: [
+//                         { text: "Extract ONLY the number from this meter image and this number is buyed petrol liter so very carefull give it perfect" },
+//                         {
+//                             inline_data: {
+//                                 mime_type: imageData.mimeType,
+//                                 data: imageData.data
+//                             }
+//                         }
+//                     ]
+//                 }]
+//             })
+//         });
+
+//         const result = await response.json();
+
+//         const text =
+//             result?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+
+//         const meterValue = text.replace(/[^0-9.]/g, "");
+
+//         if (meterValue) {
+//             statusEl.innerText = meterValue;
+//             localStorage.setItem("meterReading", meterValue);
+//         } else {
+//             statusEl.innerText = "Not found";
+//         }
+
+//     } catch (err) {
+//         console.error(err);
+//         statusEl.innerText = "Error";
+//     }
+// }

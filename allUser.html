@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>All Users</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="admin.css">
+
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <h2>Hi, <span id="branchName">Branch</span></h2>
+            <p>Welcome Back</p>
+        </div>
+
+        <a href="allUser.html">
+            <div class="menu-item">All User</div>
+        </a>
+
+        <div class="menu-item dropdown-btn">
+
+            <span>Inprogress User</span>
+
+            <span class="arrow">▲</span>
+
+        </div>
+        <div class="dropdown-content">
+
+            <a href="insilver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="inGold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="inplatinum.html">
+
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <div class="menu-item dropdown-btn">
+            <span>Complete User</span>
+            <span class="arrow">▲</span>
+        </div>
+
+
+
+        <div class="dropdown-content">
+
+            <a href="complete_silver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="complete_gold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="complete_platinum.html">
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <a href="editReward.html">
+            <div class="menu-item">
+                Edit Reward
+            </div>
+        </a>
+
+        <a href="staffReward.html">
+            <div class="menu-item">
+                S.M \ S.S Reward
+            </div>
+        </a>
+        <a href="setEvevenDate.html">
+            <div class="menu-item">
+                Set Event Date
+            </div>
+        </a>
+    </div>
+
+
+
+    <!-- MAIN -->
+
+    <div class="main">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <img src="assets/logo.png" alt="">
+
+        </div>
+        <input id="searchInput" placeholder="Search by name or email..." />
+
+        <h1 class="page-title">
+            All Users
+        </h1>
+
+
+
+        <!-- USERS -->
+
+        <div class="users-grid" id="usersContainer">
+
+            <div class="loading">
+                Loading users...
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- FIREBASE -->
+    <script type="module" src="allUser.js"></script>
+    <script> 
+    const dropdownBtns =
+            document.querySelectorAll(".dropdown-btn");
+
+        dropdownBtns.forEach((btn) => {
+
+            btn.addEventListener("click", () => {
+
+                const dropdown =
+                    btn.nextElementSibling;
+
+                const arrow =
+                    btn.querySelector(".arrow");
+
+
+
+                if (dropdown.style.display === "block") {
+
+                    dropdown.style.display = "none";
+
+                    arrow.classList.remove("rotate");
+
+                } else {
+
+                    dropdown.style.display = "block";
+
+                    arrow.classList.add("rotate");
+
+                }
+
+            });
+
+        });
+        </script>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="aLogin.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Admin Login</title>
+
+</head>
+
+<body>
+    <div class="admin-login-card phone">
+         <div class="icon">
+      <img src="assets/logo.png" alt="">
+    </div>
+        <!-- LOADER -->
+        <div id="pageLoader">
+            <div class="loader-content">
+                <div class="spinner"></div>
+                <p class="log">Logging data...</p>
+            </div>
+        </div>
+        <h2>Select Branch</h2>
+
+        <!-- Branch Select -->
+        <select id="branchSelect">
+            <option value="">Loading branches...</option>
+        </select>
+
+        <!-- Password -->
+        <input type="password" id="adminPassword" placeholder="Enter Password">
+
+        <!-- Login Button -->
+        <button id="adminLoginBtn">Login</button>
+
+        <p id="loginMsg"></p>
+    </div>
+    <script type="module" src="aLogin.js"></script>
+
+</body>
+
+</html>

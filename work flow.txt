@@ -1,0 +1,22 @@
+// /petrol-pump-loyalty/
+// │
+// ├── index.html          // Customer home/login
+// ├── dashboard.html      // Customer stamp bar
+// ├── admin.html          // Admin login/dashboard
+// ├── office.html         // Office worker dashboard
+// │
+// ├── /css/
+// │   ├── style.css
+// │   ├── admin.css
+// │   └── office.css
+// │
+// ├── /js/
+// │   ├── firebase-config.js
+// │   ├── auth.js
+// │   ├── customer.js
+// │   ├── admin.js
+// │   └── office.js
+// │
+// └── /assets/
+//     ├── logo.png
+//     └── qr/

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Event Setup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="admin.css">
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <h2>Hi, <span id="branchName">Branch</span></h2>
+            <p>Welcome Back</p>
+        </div>
+
+        <a href="allUser.html">
+            <div class="menu-item">All User</div>
+        </a>
+
+        <div class="menu-item dropdown-btn">
+
+            <span>Inprogress User</span>
+
+            <span class="arrow">▲</span>
+
+        </div>
+        <div class="dropdown-content">
+
+            <a href="insilver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="inGold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="inplatinum.html">
+
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <div class="menu-item dropdown-btn">
+            <span>Complete User</span>
+            <span class="arrow">▲</span>
+        </div>
+
+
+
+        <div class="dropdown-content">
+
+            <a href="complete_silver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="complete_gold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="complete_platinum.html">
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <a href="editReward.html">
+            <div class="menu-item">
+                Edit Reward
+            </div>
+        </a>
+
+        <a href="staffReward.html">
+            <div class="menu-item">
+                S.M \ S.S Reward
+            </div>
+        </a>
+        <a href="setEvevenDate.html">
+            <div class="menu-item">
+                Set Event Date
+            </div>
+        </a>
+    </div>
+    <div class="main">
+
+        <div class="card">
+          <h2>Set Event Date</h2>
+        
+          <!-- Branch -->
+          <select id="branchSelect">
+            <option value="">Select Branch</option>
+          </select>
+        
+          <!-- Site Email -->
+          <input type="email" id="siteEmail" placeholder="Enter Site Email">
+        
+          <!-- Date Picker -->
+          <input type="date" id="datePicker">
+        
+          <!-- Manual Date -->
+          <input type="text" id="manualDate" placeholder="YYYY-MM-DD (Manual)">
+        
+          <!-- Save Button -->
+          <button id="saveBtn" disabled>Save Event</button>
+        </div>
+    </div>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+  // 🔴 YOUR CONFIG HERE
+  const firebaseConfig = {
+     apiKey: "AIzaSyBVgzkGtL0F9HogTXrsFuUg0QGS-XZUT8",
+            authDomain: "taj-loyality.firebaseapp.com",
+            projectId: "taj-loyality",
+            storageBucket: "taj-loyality.appspot.com",
+            messagingSenderId: "23994370093",
+            appId: "1:23994370093:web:d11393abd2768513e490a4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  const branchSelect = document.getElementById("branchSelect");
+  const siteEmail = document.getElementById("siteEmail");
+  const datePicker = document.getElementById("datePicker");
+  const manualDate = document.getElementById("manualDate");
+  const saveBtn = document.getElementById("saveBtn");
+
+  // ✅ LOAD BRANCHES FROM FIRESTORE
+  async function loadBranches() {
+    const querySnapshot = await getDocs(collection(db, "branches"));
+
+    querySnapshot.forEach(doc => {
+      const data = doc.data();
+
+      let option = document.createElement("option");
+      option.value = doc.id;
+      option.textContent = data.branch; // branch name
+
+      branchSelect.appendChild(option);
+    });
+  }
+
+  loadBranches();
+
+  // ✅ SYNC DATE PICKER → MANUAL
+  datePicker.addEventListener("change", () => {
+    manualDate.value = datePicker.value;
+    checkForm();
+  });
+
+  // ✅ SYNC MANUAL → DATE PICKER
+  manualDate.addEventListener("input", () => {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(manualDate.value)) {
+      datePicker.value = manualDate.value;
+    }
+    checkForm();
+  });
+
+  // ✅ ENABLE BUTTON LOGIC
+  function checkForm() {
+    const branch = branchSelect.value;
+    const email = siteEmail.value;
+    const date = datePicker.value || manualDate.value;
+
+    if (branch && email && date) {
+      saveBtn.disabled = false;
+    } else {
+      saveBtn.disabled = true;
+    }
+  }
+
+  branchSelect.addEventListener("change", checkForm);
+  siteEmail.addEventListener("input", checkForm);
+
+  // ✅ SAVE EVENT
+  saveBtn.addEventListener("click", async () => {
+    const branchId = branchSelect.value;
+    const branchName = branchSelect.options[branchSelect.selectedIndex].text;
+    const email = siteEmail.value;
+
+    const date = datePicker.value || manualDate.value;
+
+    if (!date) {
+      alert("Enter date");
+      return;
+    }
+
+    const isValid = !isNaN(new Date(date).getTime());
+
+    if (!isValid) {
+      alert("Invalid date format");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "events"), {
+        branchId: branchId,
+        branchName: branchName,
+        siteEmail: email,
+
+        eventDate: date,
+        month: date.slice(0, 7),
+
+        manualDate: manualDate.value ? true : false,
+
+        createdAt: serverTimestamp()
+      });
+
+      alert("Event Saved Successfully");
+
+      // reset
+      branchSelect.value = "";
+      siteEmail.value = "";
+      datePicker.value = "";
+      manualDate.value = "";
+      saveBtn.disabled = true;
+
+    } catch (err) {
+      console.error(err);
+      alert("Error saving event");
+    }
+  });
+
+</script>
+
+</body>
+</html>

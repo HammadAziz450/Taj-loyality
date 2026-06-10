@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Reward Plans</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="admin.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Poppins, sans-serif;
+            background: #f3f3f3;
+            display: flex;
+        }
+
+        .main {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo img {
+            width: 110px;
+            border-radius: 100px;
+            border: 4px solid #111827;
+        }
+
+        /* ROWS */
+
+        .reward-row {
+            background: white;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.3s;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .reward-row:hover {
+            transform: translateY(-3px);
+        }
+
+        /* FORM */
+
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            display: none;
+        }
+
+        .form-box h2 {
+            margin-bottom: 20px;
+        }
+
+        .group {
+            margin-bottom: 18px;
+        }
+
+        .group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #111827;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #status {
+            text-align: center;
+            margin-top: 15px;
+            color: green;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+        <div class="sidebar-top">
+            <h2>Hi, <span id="branchName">Branch</span></h2>
+            <p>Welcome Back</p>
+        </div>
+
+        <a href="allUser.html">
+            <div class="menu-item">All User</div>
+        </a>
+
+        <div class="menu-item dropdown-btn">
+
+            <span>Inprogress User</span>
+
+            <span class="arrow">▲</span>
+
+        </div>
+        <div class="dropdown-content">
+
+            <a href="insilver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="inGold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="inplatinum.html">
+
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <div class="menu-item dropdown-btn">
+            <span>Complete User</span>
+            <span class="arrow">▲</span>
+        </div>
+
+
+
+        <div class="dropdown-content">
+
+            <a href="complete_silver.html">
+                <div class="sub-item">Silver</div>
+            </a>
+
+            <a href="complete_gold.html">
+                <div class="sub-item">Gold</div>
+            </a>
+
+            <a href="complete_platinum.html">
+                <div class="sub-item">Platinum</div>
+            </a>
+
+        </div>
+        <a href="editReward.html">
+            <div class="menu-item">
+                Edit Reward
+            </div>
+        </a>
+
+        <a href="staffReward.html">
+            <div class="menu-item">
+                S.M \ S.S Reward
+            </div>
+        </a>
+        <a href="setEvevenDate.html">
+            <div class="menu-item">
+                Set Event Date
+            </div>
+        </a>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main">
+
+        <div class="logo">
+            <img src="assets/logo.png" alt="">
+        </div>
+
+        <!-- ROWS -->
+        <div class="reward-row" onclick="openForm('silver')">
+            Edit Silver Plan
+        </div>
+
+        <div class="reward-row" onclick="openForm('gold')">
+            Edit Gold Plan
+        </div>
+
+        <div class="reward-row" onclick="openForm('platinum')">
+            Edit Platinum Plan
+        </div>
+
+        <!-- FORM -->
+        <div class="form-box" id="formBox">
+
+            <h2 id="formTitle">Edit Plan</h2>
+
+            <div class="group">
+                <label>Branch Name</label>
+                <input type="text" id="branchInput">
+            </div>
+
+            <div class="group">
+                <label>Changer Name</label>
+                <input type="text" id="changerName">
+            </div>
+
+            <div class="group">
+                <label>Changer Post</label>
+                <input type="text" id="changerPost">
+            </div>
+
+            <div class="group">
+                <label>Mobile Number</label>
+                <input type="text" id="mobile">
+            </div>
+
+            <div class="group">
+                <label>Reward</label>
+                <input type="text" id="reward">
+            </div>
+
+            <button id="saveBtn">
+                Save Reward
+            </button>
+
+            <div id="status"></div>
+
+        </div>
+
+    </div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+/* 🔥 FIREBASE */
+const app = initializeApp({
+    apiKey: "AIzaSyBVgzkGtL0F9HogTXrsFuUg0QGS-XZUT8",
+    authDomain: "taj-loyality.firebaseapp.com",
+    projectId: "taj-loyality",
+    storageBucket: "taj-loyality.appspot.com",
+    messagingSenderId: "23994370093",
+    appId: "1:23994370093:web:d11393abd2768513e490a4"
+});
+
+const db = getFirestore(app);
+
+/* ✅ NORMALIZER (IMPORTANT FIX) */
+function normalizeBranch(value) {
+    if (!value) return "";
+    return value.toString().match(/\d+/g)?.join("") || "";
+}
+
+/* BRANCH */
+const branchRaw = localStorage.getItem("adminBranch") || "";
+const branchId = normalizeBranch(branchRaw);
+
+document.getElementById("branchName").innerText = branchRaw;
+
+/* PLAN */
+let currentPlan = "";
+
+/* OPEN FORM */
+window.openForm = async function(plan) {
+
+    currentPlan = plan;
+
+    document.getElementById("formBox").style.display = "block";
+    document.getElementById("formTitle").innerText = `Edit ${plan.toUpperCase()} Plan`;
+
+    document.getElementById("branchInput").value = branchRaw;
+
+    const ref = doc(db, "branch_rewards", branchId);
+    const snap = await getDoc(ref);
+
+    if (snap.exists()) {
+        const data = snap.data();
+
+        if (data[plan]) {
+            document.getElementById("reward").value = data[plan].reward || "";
+            document.getElementById("changerName").value = data[plan].changerName || "";
+            document.getElementById("changerPost").value = data[plan].changerPost || "";
+            document.getElementById("mobile").value = data[plan].mobile || "";
+        }
+    }
+};
+
+/* SAVE */
+document.getElementById("saveBtn").addEventListener("click", async () => {
+
+    const reward = document.getElementById("reward").value;
+    const changerName = document.getElementById("changerName").value;
+    const changerPost = document.getElementById("changerPost").value;
+    const mobile = document.getElementById("mobile").value;
+
+    const ref = doc(db, "branch_rewards", branchId);
+
+    await setDoc(ref, {
+        branch: branchRaw,
+        branchId: branchId,
+
+        [currentPlan]: {
+            reward,
+            changerName,
+            changerPost,
+            mobile,
+            updatedAt: new Date().toISOString()
+        }
+
+    }, { merge: true });
+
+    document.getElementById("status").innerText =
+        `${currentPlan.toUpperCase()} Reward Updated!`;
+});
+
+</script>
+
+</body>
+</html>

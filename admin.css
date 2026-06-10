@@ -1,0 +1,425 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #ffff;
+}
+
+body {
+    background: #f3f3f3;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 300px;
+    background: #000;
+    color: white;
+    min-height: 100vh;
+}
+
+.sidebar-top {
+    padding: 40px 20px 20px;
+    border-bottom: 3px solid #666;
+}
+
+.sidebar-top h2 {
+    font-weight: 500;
+}
+
+.sidebar-top p {
+    font-size: 18px;
+    color: #ddd;
+}
+
+.menu-item {
+    padding: 14px 20px;
+    border-bottom: 3px solid #555;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-item:hover {
+    background: #111;
+}
+
+/* DROPDOWN */
+
+.dropdown-content {
+    display: none;
+    background: #111;
+}
+
+.sub-item {
+    padding: 18px 40px;
+    border-bottom: 1px solid #333;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ddd;
+    transition: 0.3s;
+}
+
+.sub-item:hover {
+    background: #1d1d1d;
+    color: white;
+}
+
+.arrow {
+    transition: 0.3s;
+}
+
+.arrow.rotate {
+    transform: rotate(180deg);
+}
+
+/* MAIN */
+
+.main {
+    flex: 1;
+    padding: 20px 30px;
+}
+
+.logo {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logo img {
+    width: 120px;
+    border: 4px solid;
+    border-radius: 100px;
+}
+
+.page-title {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: 500;
+    color: #222;
+}
+
+/* CARD */
+
+.reward-card {
+    margin-top: 25px;
+    background: white;
+    border-radius: 35px;
+    padding: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.reward-card h1 {
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.reward-card p {
+    line-height: 1.6;
+    color: #222;
+}
+
+@media(max-width: 900px) {
+
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+    .reward-card h1 {
+        font-size: 40px;
+    }
+
+    .reward-card p {
+        font-size: 16px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: #f3f3f3;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+    width: 300px;
+    background: #000;
+    color: white;
+    min-height: 100vh;
+}
+
+.sidebar-top {
+    padding: 40px 20px 20px;
+    border-bottom: 3px solid #666;
+}
+
+.sidebar-top h2 {
+    font-weight: 500;
+}
+
+.sidebar-top p {
+    font-size: 18px;
+    color: #ddd;
+}
+
+.menu-item {
+    padding: 14px 20px;
+    border-bottom: 3px solid #555;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-item:hover {
+    background: #111;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* DROPDOWN */
+
+.dropdown-content {
+    display: none;
+    background: #111;
+}
+
+.sub-item {
+    padding: 18px 40px;
+    border-bottom: 1px solid #333;
+    font-size: 18px;
+    cursor: pointer;
+    color: #ddd;
+    transition: 0.3s;
+}
+
+.sub-item:hover {
+    background: #1d1d1d;
+    color: white;
+}
+
+.arrow {
+    transition: 0.3s;
+}
+
+.arrow.rotate {
+    transform: rotate(180deg);
+}
+
+/* MAIN */
+
+.main {
+    flex: 1;
+    padding: 20px 30px;
+}
+
+.logo {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.logo img {
+    width: 120px;
+    border: 4px solid;
+    border-radius: 100px;
+}
+
+.page-title {
+    margin-top: 20px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #222;
+}
+
+/* USERS GRID */
+
+.users-grid {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+/* USER CARD */
+
+.user-card {
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.user-card:hover {
+    transform: translateY(-3px);
+}
+
+.user-card h2 {
+    margin-bottom: 15px;
+    color: #111;
+    font-size: 24px;
+}
+
+.user-card p {
+    margin: 10px 0;
+    color: #444;
+    font-size: 16px;
+}
+
+.user-card span {
+    font-weight: 600;
+    color: black;
+}
+
+.loading {
+    font-size: 20px;
+    color: #555;
+    text-align: center;
+    margin-top: 40px;
+}
+#generateBtn{
+    padding: 12px;
+    border-radius: 9px;
+    cursor: pointer;
+    border: 0px;
+    background: #d70000;
+    color: #ffffff;
+}
+.card-grid {
+    display: grid;
+    gap: 15px;
+    justify-items: stretch;
+    align-items: center;
+    align-content: space-between;
+}
+
+.user-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
+}
+
+input {
+    padding: 20px;
+    width: 100%;
+    margin: 13px 0;
+}
+
+.user-card:hover {
+    transform: translateY(-3px);
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.avatar {
+    width: 45px;
+    height: 45px;
+    background: #111827;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.user-header h2 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.email {
+    font-size: 12px;
+    color: gray;
+}
+
+.user-body .row {
+    display: flex;
+    justify-content: space-between;
+    margin: 6px 0;
+    font-size: 13px;
+}
+
+.meter {
+    color: #0369a1;
+}
+
+.plan {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.plan.gold {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.plan.silver {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.plan.no {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+}
+
+@media(max-width:900px) {
+
+    body {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .main {
+        padding: 20px;
+    }
+
+}

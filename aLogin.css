@@ -1,0 +1,92 @@
+.admin-login-card select,
+.admin-login-card input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    width: 100%;
+    margin: 5px 0;
+}
+.phone h2{
+    text-align: justify;
+}
+.admin-login-card button {
+    background: #e80303;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+        width: 100%;
+}
+
+.admin-login-card button:hover {
+    opacity: 0.9;
+    background-color: #e80303d9 !important;
+}
+
+#loginMsg {
+    text-align: center;
+    font-weight: bold;
+}
+
+/* FULL SCREEN OVERLAY */
+#pageLoader {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(6px);
+    /* THIS gives your screenshot effect */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+/* ACTIVE STATE */
+#pageLoader.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* LOADER BOX */
+.loader-content {
+    text-align: center;
+    color: white;
+    font-family: sans-serif;
+}
+
+/* SPINNER (RING STYLE LIKE IMAGE) */
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 6px solid rgb(255 0 0);
+    border-top: 6px solid #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    margin-bottom: 12px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* TEXT */
+.loader-content p {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin: 0;
+    opacity: 0.9;
+}
+.log{
+    color: #fff !important;
+}

@@ -1,0 +1,394 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif
+}
+
+.bar {
+    width: 100%;
+    height: 20px;
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.fill {
+    height: 100%;
+    width: 0%;
+    background: green;
+    color: white;
+    text-align: center;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #0FA958;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #0c8a48;
+}
+
+body {
+    background: #f3f5f7;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+    padding: 20px
+}
+
+header {
+    text-align: center;
+}
+
+header img {
+    width: 10%;
+}
+
+.phone { 
+    width: 92%;
+    min-height: 960px;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, .08);
+    padding: 20px;
+    position: relative;
+}
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.top h1 {
+    font-size: 34px;
+    color: #111
+}
+
+.card {
+    background: linear-gradient(135deg, #8f0a0a, #993131);
+    border-radius: 22px;
+    margin: 0 0 25px 0px;
+    padding: 20px;
+    color: #fff;
+}
+
+.card h3 {
+    font-size: 28px;
+    margin-top: 10px
+}
+
+.card p {
+    font-size: 14px;
+    margin-top: 8px;
+    color: #ffd54d
+}
+
+.dots {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0
+}
+
+.ProgressBar {
+    width: 100%;
+    margin-top: 12px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-radius: 21px;
+    background: transparent;
+}
+.colourArea{
+    background: #fff;
+    /* width: 94%; */
+    height: 20px;
+    border-radius: 21px;
+    position: relative;
+    top: -2px;
+}
+
+.dot.empty {
+    background: transparent;
+    border: 2px solid #fff
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px
+}
+
+.box {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .03)
+}
+
+.box h4 {
+    margin-top: 10px
+}
+
+.keep {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 15px
+}
+
+.activity {
+    margin-top: 20px
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 10px
+}
+
+.nav {
+    margin-top: 30px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding-top: 14px;
+    border-top: 1px solid #eee;
+    background: #fff;
+    border-radius: 0 0 30px 30px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.nav div {
+    text-align: center;
+    font-size: 14px;
+    color: #777
+}
+
+.nav .active {
+    color: #0a8f3d;
+    font-weight: bold
+}
+
+
+/* -------------histroy CSS------------ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif
+}
+
+body {
+    background: #f3f5f7;
+    padding: 20px
+}
+
+/* .container {
+            width: 100%;
+            min-height: 100vh
+        } */
+
+.top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px
+}
+
+.top h1 {
+    font-size: 28px;
+    color: #111
+}
+
+.search {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    width: 100%
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 16px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .03)
+}
+
+.item-left h3 {
+    font-size: 18px;
+    color: #111
+}
+
+.item-left p {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px
+}
+
+.item-right {
+    color: #0a8f3d;
+    font-weight: bold
+}
+
+
+
+/* --------profile page CSS----- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif
+}
+
+body {
+    background: #f3f5f7;
+    padding: 20px 20px 90px
+}
+
+
+
+.profile-card {
+    background: linear-gradient(185deg, #f3f5f7, #ffffff);
+
+    border-radius: 20px;
+    color: white;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .03)
+}
+
+.profile-card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 12px
+}
+
+.profile-card h2 {
+    font-size: 24px;
+    color: #111
+}
+
+.profile-card p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px
+}
+
+.menu {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px
+}
+
+.menu-item {
+    background: #fff;
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, .03);
+    font-size: 18px
+}
+
+/* .nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 40px);
+            max-width: 1180px;
+            height: 70px;
+            background: #fff;
+            border-top: 1px solid #ddd;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center
+        }
+
+        .nav div {
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+            flex: 1
+        }
+
+        .nav .active {
+            color: #0a8f3d;
+            font-weight: bold
+        } */
+/* ---- scan CSS */
+
+#reader {
+    width: 90%;
+    height: 300px;
+    margin: auto;
+    position: relative;
+    padding: 0px;
+    border: 1px solid silver;
+}
+
+#reader button {
+    width: 50%;
+}
+
+#meterPhoto {
+    border: 1px solid black;
+    padding: 54px;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+#box {
+    position: relative;
+    bottom: 257px;
+}
+
+#box p {
+    text-align: center;
+    margin: 31px 0;
+}
+
+/* Hide default input */

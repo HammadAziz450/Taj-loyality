@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="dashboared.css">
+    <title>Profile</title>
+</head>
+
+<body>
+    <div class="container phone">
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card">
+            <img id="profilePic" src="default.png" alt="Profile">
+            <h2 id="profileName">Loading...</h2>
+            <p id="profileEmail">Loading...</p>
+        </div>
+
+        <!-- MENU -->
+        <div class="menu">
+            <div class="menu-item"><a href="">❓ FAQ </a><span>›</span></div>
+            <div class="menu-item" onclick="logout()">🚪 Logout <span>›</span></div>
+            <div class="menu-item" ><a href="aLogin.html"> Admin login </a><span>›</span></div>
+        </div>
+
+        <!-- NAV -->
+        <div class="nav">
+            <a href="dhashboard.html">
+                <div>🏠<br>Home</div>
+            </a>
+            <a href="histroy.html">
+                <div>🕘<br>History</div>
+            </a>
+            <a href="./reward.html">
+                <div>🎁<br>Reward</div>
+            </a>
+            <a href="profile.html">
+                <div class="active">👤<br>Profile</div>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-app.js";
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut,
+            setPersistence,
+            browserLocalPersistence
+        } from "https://www.gstatic.com/firebasejs/10.12.4/firebase-auth.js";
+
+        // 🔥 YOUR FIREBASE CONFIG (replace this)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
+            authDomain: "taj-loyality.firebaseapp.com",
+            projectId: "taj-loyality",
+            storageBucket: "taj-loyality.appspot.com",
+            messagingSenderId: "23994370093",
+            appId: "1:23994370093:web:d11393abd2768513e490a4"
+        };
+
+        // INIT FIREBASE
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // 🔐 KEEP USER LOGGED IN
+        setPersistence(auth, browserLocalPersistence);
+
+        // ⏳ WAIT FOR AUTH STATE (IMPORTANT FIX)
+        onAuthStateChanged(auth, (user) => {
+
+            if (user) {
+                // SHOW PROFILE DATA
+                document.getElementById("profileName").innerText =
+                    user.displayName || "No Name";
+
+                document.getElementById("profileEmail").innerText =
+                    user.email || "No Email";
+
+                document.getElementById("profilePic").src =
+                    user.photoURL || "default.png";
+
+                localStorage.setItem("userEmail", email);
+                localStorage.setItem("userName", name);
+            }
+
+            else {
+                // ONLY REDIRECT IF REALLY NOT LOGGED IN
+                setTimeout(() => {
+                    if (!auth.currentUser) {
+                        console.log("u r not login");
+
+                    }
+                }, 800);
+            }
+        });
+
+        // 🚪 LOGOUT
+        window.logout = function () {
+            signOut(auth).then(() => {
+                window.location.href = "index.html";
+            });
+        };
+    </script>
+
+</body>
+
+</html>

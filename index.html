@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Petrol Pump Rewards</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="login">
+  <div class="phone">
+
+    <div class="icon">
+      <img src="assets/logo.png" alt="">
+    </div>
+    <h2>Welcome to</h2>
+    <h3 style="color:#1e7f3f;">TAJ Petrol Pump Rewards</h3>
+
+    <p>Scan QR at our pump and earn stamps</p>
+
+    <button class="google-btn" onclick="login()">
+      Continue with Google
+    </button>
+
+    <div class="divider">or</div>
+
+    <input type="email" placeholder="Enter your email">
+    <button class="continue-btn">Continue</button>
+
+  </div>
+</div>
+
+<!-- APP SCREEN -->
+<div id="app" style="display:none; text-align:center;">
+
+  <h2 id="userName"></h2>
+
+  <div id="progress"></div>
+  <p id="count"></p>
+
+  <button onclick="addStamp()">Add Stamp</button>
+
+  <h3 id="reward"></h3>
+
+  <!-- ✅ Logout inside app -->
+  <button onclick="logout()" style="margin-top:20px;">Logout</button>
+
+</div>
+
+<script type="module" src="script.js"></script>
+
+</body>
+</html>
