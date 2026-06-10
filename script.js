@@ -4,7 +4,6 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithRedirect,
-  getRedirectResult,
   onAuthStateChanged,
   signOut
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
@@ -18,7 +17,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 
-// 🔥 Firebase Config
+// 🔥 CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyBVgzkGtL0fZ9HogTXrsFuUg0QGS-XZUT8",
   authDomain: "taj-loyality.firebaseapp.com",
@@ -29,7 +28,7 @@ const firebaseConfig = {
 };
 
 
-// 🔥 INIT (ONLY ONCE)
+// 🔥 INIT
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -39,55 +38,46 @@ let currentUser = null;
 
 
 //
-// ✅ LOGIN (REDIRECT ONLY)
+// ✅ LOGIN (REDIRECT)
 //
-window.login = function () {
+window.login = () => {
   signInWithRedirect(auth, provider);
 };
 
 
 //
-// ✅ HANDLE REDIRECT RESULT
-//
-getRedirectResult(auth)
-  .then((result) => {
-    if (result?.user) {
-      console.log("Login success:", result.user);
-    }
-  })
-  .catch((err) => {
-    console.error("Redirect error:", err.message);
-  });
-
-
-//
-// ✅ AUTH STATE
+// ✅ AUTH STATE + REDIRECT CONTROL
 //
 onAuthStateChanged(auth, async (user) => {
+  const path = window.location.pathname;
+
   if (user) {
     currentUser = user;
 
-    localStorage.setItem("userName", user.displayName);
+    console.log("Logged in:", user.email);
 
-    // redirect control
-    if (
-      window.location.pathname.includes("index.html") ||
-      window.location.pathname === "/"
-    ) {
-      window.location.href = "dashboard.html";
+    // 👉 If on login page → go to dashboard
+    if (path.includes("index.html") || path === "/") {
+      window.location.replace("dashboard.html");
       return;
     }
 
-    // UI update
-    const userNameEl = document.getElementById("userName");
-    if (userNameEl) {
-      userNameEl.innerText = "Hi, " + user.displayName + " 👋";
+    // 👉 If on dashboard → load user data
+    if (path.includes("dashboard.html")) {
+      const userNameEl = document.getElementById("userName");
+      if (userNameEl) {
+        userNameEl.innerText = "Hi, " + user.displayName + " 👋";
+      }
+
+      await loadUser();
     }
 
-    await loadUser();
   } else {
-    if (window.location.pathname.includes("dashboard.html")) {
-      window.location.href = "index.html";
+    console.log("Not logged in");
+
+    // 👉 Block dashboard if not logged in
+    if (path.includes("dashboard.html")) {
+      window.location.replace("index.html");
     }
   }
 });
@@ -133,17 +123,12 @@ async function updateUI() {
     "></span>`;
   }
 
-  const progressEl = document.getElementById("progress");
-  const countEl = document.getElementById("count");
-
-  if (progressEl) progressEl.innerHTML = bar;
-  if (countEl) countEl.innerText = `${stamps}/6 Stamps`;
+  document.getElementById("progress")?.innerHTML = bar;
+  document.getElementById("count")?.innerText = `${stamps}/6 Stamps`;
 
   if (stamps >= 6) {
     const code = generateCode();
-
-    const rewardEl = document.getElementById("reward");
-    if (rewardEl) rewardEl.innerText = "Reward Code: " + code;
+    document.getElementById("reward")?.innerText = "Reward Code: " + code;
 
     await updateDoc(ref, { stamps: 0 });
   }
@@ -153,7 +138,7 @@ async function updateUI() {
 //
 // ✅ ADD STAMP
 //
-window.addStamp = async function () {
+window.addStamp = async () => {
   const ref = doc(db, "users", currentUser.uid);
   const snap = await getDoc(ref);
   const data = snap.data();
@@ -177,8 +162,9 @@ window.addStamp = async function () {
 //
 // ✅ LOGOUT
 //
-window.logout = async function () {
+window.logout = async () => {
   await signOut(auth);
+  window.location.replace("index.html");
 };
 
 
